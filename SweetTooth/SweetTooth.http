@@ -1,0 +1,6 @@
+@SweetTooth_HostAddress = http://localhost:5062
+
+GET {{SweetTooth_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

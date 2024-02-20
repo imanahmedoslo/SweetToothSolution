@@ -12,8 +12,8 @@ using SweetTooth.Data;
 namespace SweetTooth.Migrations
 {
     [DbContext(typeof(SweetToothDbContext))]
-    [Migration("20240220115631_8Tables")]
-    partial class _8Tables
+    [Migration("20240220143914_updatedTables")]
+    partial class updatedTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace SweetTooth.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("SweetTooth.Models.BillsAndOtherExpences", b =>
+            modelBuilder.Entity("SweetTooth.Data.Models.BillsAndOtherExpences", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -56,7 +56,7 @@ namespace SweetTooth.Migrations
                     b.ToTable("BillsAndOtherExpences");
                 });
 
-            modelBuilder.Entity("SweetTooth.Models.Budget", b =>
+            modelBuilder.Entity("SweetTooth.Data.Models.Budget", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -87,10 +87,10 @@ namespace SweetTooth.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PeriodicBudgets");
+                    b.ToTable("Budgets");
                 });
 
-            modelBuilder.Entity("SweetTooth.Models.DailyClosingChart", b =>
+            modelBuilder.Entity("SweetTooth.Data.Models.DailyClosingChart", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -132,7 +132,7 @@ namespace SweetTooth.Migrations
                     b.ToTable("DailyClosingCharts");
                 });
 
-            modelBuilder.Entity("SweetTooth.Models.Employee", b =>
+            modelBuilder.Entity("SweetTooth.Data.Models.Employee", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -163,7 +163,7 @@ namespace SweetTooth.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("SweetTooth.Models.Inventory", b =>
+            modelBuilder.Entity("SweetTooth.Data.Models.Inventory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -189,7 +189,7 @@ namespace SweetTooth.Migrations
                     b.ToTable("Inventory");
                 });
 
-            modelBuilder.Entity("SweetTooth.Models.PurchaseChart", b =>
+            modelBuilder.Entity("SweetTooth.Data.Models.PurchaseChart", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -219,10 +219,10 @@ namespace SweetTooth.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("DailyOpeningCharts");
+                    b.ToTable("PurchaseCharts");
                 });
 
-            modelBuilder.Entity("SweetTooth.Models.ShoppingListItem", b =>
+            modelBuilder.Entity("SweetTooth.Data.Models.ShoppingListItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -259,7 +259,7 @@ namespace SweetTooth.Migrations
                     b.ToTable("ShoppingListItems");
                 });
 
-            modelBuilder.Entity("SweetTooth.Models.StaffMembersInfo", b =>
+            modelBuilder.Entity("SweetTooth.Data.Models.StaffMembersInfo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -311,9 +311,9 @@ namespace SweetTooth.Migrations
                     b.ToTable("StaffMembersInfos");
                 });
 
-            modelBuilder.Entity("SweetTooth.Models.BillsAndOtherExpences", b =>
+            modelBuilder.Entity("SweetTooth.Data.Models.BillsAndOtherExpences", b =>
                 {
-                    b.HasOne("SweetTooth.Models.DailyClosingChart", "DailyClosingChart")
+                    b.HasOne("SweetTooth.Data.Models.DailyClosingChart", "DailyClosingChart")
                         .WithMany("BillsAndOtherExpences")
                         .HasForeignKey("DailyClosingChartId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -322,15 +322,15 @@ namespace SweetTooth.Migrations
                     b.Navigation("DailyClosingChart");
                 });
 
-            modelBuilder.Entity("SweetTooth.Models.DailyClosingChart", b =>
+            modelBuilder.Entity("SweetTooth.Data.Models.DailyClosingChart", b =>
                 {
-                    b.HasOne("SweetTooth.Models.Budget", "Budget")
+                    b.HasOne("SweetTooth.Data.Models.Budget", "Budget")
                         .WithMany("DailyClosingCharts")
                         .HasForeignKey("BudgetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SweetTooth.Models.Employee", "Employee")
+                    b.HasOne("SweetTooth.Data.Models.Employee", "Employee")
                         .WithMany("DailyClosingChart")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -341,15 +341,15 @@ namespace SweetTooth.Migrations
                     b.Navigation("Employee");
                 });
 
-            modelBuilder.Entity("SweetTooth.Models.PurchaseChart", b =>
+            modelBuilder.Entity("SweetTooth.Data.Models.PurchaseChart", b =>
                 {
-                    b.HasOne("SweetTooth.Models.Budget", "Budget")
+                    b.HasOne("SweetTooth.Data.Models.Budget", "Budget")
                         .WithMany("PurchaseCharts")
                         .HasForeignKey("BudgetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SweetTooth.Models.Employee", "Employee")
+                    b.HasOne("SweetTooth.Data.Models.Employee", "Employee")
                         .WithMany("PurchaseChart")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -360,9 +360,9 @@ namespace SweetTooth.Migrations
                     b.Navigation("Employee");
                 });
 
-            modelBuilder.Entity("SweetTooth.Models.ShoppingListItem", b =>
+            modelBuilder.Entity("SweetTooth.Data.Models.ShoppingListItem", b =>
                 {
-                    b.HasOne("SweetTooth.Models.PurchaseChart", "PurchaseChart")
+                    b.HasOne("SweetTooth.Data.Models.PurchaseChart", "PurchaseChart")
                         .WithMany("ShoppingList")
                         .HasForeignKey("PurchaseChartId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -371,30 +371,30 @@ namespace SweetTooth.Migrations
                     b.Navigation("PurchaseChart");
                 });
 
-            modelBuilder.Entity("SweetTooth.Models.StaffMembersInfo", b =>
+            modelBuilder.Entity("SweetTooth.Data.Models.StaffMembersInfo", b =>
                 {
-                    b.HasOne("SweetTooth.Models.Employee", "Employee")
+                    b.HasOne("SweetTooth.Data.Models.Employee", "Employee")
                         .WithOne("StaffMembersInfo")
-                        .HasForeignKey("SweetTooth.Models.StaffMembersInfo", "EmployeeId")
+                        .HasForeignKey("SweetTooth.Data.Models.StaffMembersInfo", "EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Employee");
                 });
 
-            modelBuilder.Entity("SweetTooth.Models.Budget", b =>
+            modelBuilder.Entity("SweetTooth.Data.Models.Budget", b =>
                 {
                     b.Navigation("DailyClosingCharts");
 
                     b.Navigation("PurchaseCharts");
                 });
 
-            modelBuilder.Entity("SweetTooth.Models.DailyClosingChart", b =>
+            modelBuilder.Entity("SweetTooth.Data.Models.DailyClosingChart", b =>
                 {
                     b.Navigation("BillsAndOtherExpences");
                 });
 
-            modelBuilder.Entity("SweetTooth.Models.Employee", b =>
+            modelBuilder.Entity("SweetTooth.Data.Models.Employee", b =>
                 {
                     b.Navigation("DailyClosingChart");
 
@@ -403,7 +403,7 @@ namespace SweetTooth.Migrations
                     b.Navigation("StaffMembersInfo");
                 });
 
-            modelBuilder.Entity("SweetTooth.Models.PurchaseChart", b =>
+            modelBuilder.Entity("SweetTooth.Data.Models.PurchaseChart", b =>
                 {
                     b.Navigation("ShoppingList");
                 });

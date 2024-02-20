@@ -1,4 +1,4 @@
-﻿namespace SweetTooth.Models
+﻿namespace SweetTooth.Data.Models
 {
     public class Employee
     {
@@ -11,9 +11,9 @@
 
         // Navigation properties
         public StaffMembersInfo? StaffMembersInfo { get; set; }
-        public ICollection<DailyClosingChart>? DailyClosingChart { get; set;}
-        public ICollection<PurchaseChart>? PurchaseChart { get; set;}
-         public Employee(string userName, int employeeNumber, string password, string role, int monthlyWage)
+        public ICollection<DailyClosingChart>? DailyClosingChart { get; set; }
+        public ICollection<PurchaseChart>? PurchaseChart { get; set; }
+        public Employee(string userName, int employeeNumber, string password, string role, int monthlyWage)
         {
 
             UserName = userName;

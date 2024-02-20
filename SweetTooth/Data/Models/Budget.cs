@@ -1,4 +1,4 @@
-﻿namespace SweetTooth.Models
+﻿namespace SweetTooth.Data.Models
 {
     public class Budget
     {
@@ -11,11 +11,11 @@
         public DateTime DateTo { get; set; }
         public int GoalEarnings { get; set; }
 
-       
-        public virtual ICollection<PurchaseChart>? PurchaseCharts { get; set; }
-        public virtual ICollection <DailyClosingChart>? DailyClosingCharts { get; set; }
 
-       
-       
+        public virtual ICollection<PurchaseChart>? PurchaseCharts { get; set; }
+        public virtual ICollection<DailyClosingChart>? DailyClosingCharts { get; set; }
+
+
+
     }
 }

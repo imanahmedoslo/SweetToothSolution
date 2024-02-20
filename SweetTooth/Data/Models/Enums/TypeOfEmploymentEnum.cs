@@ -1,4 +1,4 @@
-﻿namespace SweetTooth.Models.Enums
+﻿namespace SweetTooth.Data.Models.Enums
 {
     public enum TypeOfEmploymentEnum
     {

@@ -6,11 +6,30 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SweetTooth.Migrations
 {
     /// <inheritdoc />
-    public partial class _8Tables : Migration
+    public partial class updatedTables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Budgets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TotalSum = table.Column<int>(type: "int", nullable: false),
+                    ExpensesBudget = table.Column<int>(type: "int", nullable: false),
+                    CharityBudget = table.Column<int>(type: "int", nullable: false),
+                    WasteBudget = table.Column<int>(type: "int", nullable: false),
+                    DateFrom = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateTo = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    GoalEarnings = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Budgets", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Employees",
                 columns: table => new
@@ -45,22 +64,64 @@ namespace SweetTooth.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PeriodicBudgets",
+                name: "DailyClosingCharts",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TotalSum = table.Column<int>(type: "int", nullable: false),
-                    ExpensesBudget = table.Column<int>(type: "int", nullable: false),
-                    CharityBudget = table.Column<int>(type: "int", nullable: false),
-                    WasteBudget = table.Column<int>(type: "int", nullable: false),
-                    DateFrom = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateTo = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    GoalEarnings = table.Column<int>(type: "int", nullable: false)
+                    TotalEarnings = table.Column<int>(type: "int", nullable: false),
+                    TotalWaste = table.Column<int>(type: "int", nullable: false),
+                    TotalCharity = table.Column<int>(type: "int", nullable: false),
+                    ClosingReport = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TotallBills = table.Column<int>(type: "int", nullable: false),
+                    EmployeeId = table.Column<int>(type: "int", nullable: false),
+                    BudgetId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PeriodicBudgets", x => x.Id);
+                    table.PrimaryKey("PK_DailyClosingCharts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DailyClosingCharts_Budgets_BudgetId",
+                        column: x => x.BudgetId,
+                        principalTable: "Budgets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DailyClosingCharts_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PurchaseCharts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TotalPurchasePrice = table.Column<int>(type: "int", nullable: false),
+                    Report = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EmployeeId = table.Column<int>(type: "int", nullable: false),
+                    BudgetId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PurchaseCharts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PurchaseCharts_Budgets_BudgetId",
+                        column: x => x.BudgetId,
+                        principalTable: "Budgets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PurchaseCharts_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -87,67 +148,6 @@ namespace SweetTooth.Migrations
                         name: "FK_StaffMembersInfos_Employees_EmployeeId",
                         column: x => x.EmployeeId,
                         principalTable: "Employees",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DailyClosingCharts",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TotalEarnings = table.Column<int>(type: "int", nullable: false),
-                    TotalWaste = table.Column<int>(type: "int", nullable: false),
-                    TotalCharity = table.Column<int>(type: "int", nullable: false),
-                    ClosingReport = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TotallBills = table.Column<int>(type: "int", nullable: false),
-                    EmployeeId = table.Column<int>(type: "int", nullable: false),
-                    BudgetId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DailyClosingCharts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_DailyClosingCharts_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DailyClosingCharts_PeriodicBudgets_BudgetId",
-                        column: x => x.BudgetId,
-                        principalTable: "PeriodicBudgets",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DailyOpeningCharts",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TotalPurchasePrice = table.Column<int>(type: "int", nullable: false),
-                    Report = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EmployeeId = table.Column<int>(type: "int", nullable: false),
-                    BudgetId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DailyOpeningCharts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_DailyOpeningCharts_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DailyOpeningCharts_PeriodicBudgets_BudgetId",
-                        column: x => x.BudgetId,
-                        principalTable: "PeriodicBudgets",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -193,9 +193,9 @@ namespace SweetTooth.Migrations
                 {
                     table.PrimaryKey("PK_ShoppingListItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ShoppingListItems_DailyOpeningCharts_PurchaseChartId",
+                        name: "FK_ShoppingListItems_PurchaseCharts_PurchaseChartId",
                         column: x => x.PurchaseChartId,
-                        principalTable: "DailyOpeningCharts",
+                        principalTable: "PurchaseCharts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -216,13 +216,13 @@ namespace SweetTooth.Migrations
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DailyOpeningCharts_BudgetId",
-                table: "DailyOpeningCharts",
+                name: "IX_PurchaseCharts_BudgetId",
+                table: "PurchaseCharts",
                 column: "BudgetId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DailyOpeningCharts_EmployeeId",
-                table: "DailyOpeningCharts",
+                name: "IX_PurchaseCharts_EmployeeId",
+                table: "PurchaseCharts",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
@@ -256,13 +256,13 @@ namespace SweetTooth.Migrations
                 name: "DailyClosingCharts");
 
             migrationBuilder.DropTable(
-                name: "DailyOpeningCharts");
+                name: "PurchaseCharts");
+
+            migrationBuilder.DropTable(
+                name: "Budgets");
 
             migrationBuilder.DropTable(
                 name: "Employees");
-
-            migrationBuilder.DropTable(
-                name: "PeriodicBudgets");
         }
     }
 }

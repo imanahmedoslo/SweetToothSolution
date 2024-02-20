@@ -1,6 +1,6 @@
-﻿using SweetTooth.Models.Enums;
+﻿using SweetTooth.Data.Models.Enums;
 
-namespace SweetTooth.Models
+namespace SweetTooth.Data.Models
 {
     public class Inventory
     {
@@ -9,8 +9,8 @@ namespace SweetTooth.Models
         public int Amount { get; set; }
         public MeasurmentEnum Measurement { get; set; } // Enum suggested
         public DateTime ExpiringDate { get; set; }
-        
 
-      
+
+
     }
 }

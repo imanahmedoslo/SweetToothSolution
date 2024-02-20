@@ -1,6 +1,6 @@
-﻿using SweetTooth.Models.Enums;
+﻿using SweetTooth.Data.Models.Enums;
 
-namespace SweetTooth.Models
+namespace SweetTooth.Data.Models
 {
     public class ShoppingListItem
     {
@@ -14,6 +14,6 @@ namespace SweetTooth.Models
         public DateTime ExpiringDate { get; set; }
 
         // Navigation property
-        public  PurchaseChart? PurchaseChart { get; set; }
+        public PurchaseChart? PurchaseChart { get; set; }
     }
 }

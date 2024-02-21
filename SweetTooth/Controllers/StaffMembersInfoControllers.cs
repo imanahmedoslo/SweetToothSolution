@@ -46,14 +46,33 @@ namespace SweetTooth.Controllers
             return Ok(staffMembersInfo);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateStaffMembersInfo([FromBody] StaffMembersInfo staffMembersInfo)
+        public async Task<IActionResult> CreateStaffMembersInfo([FromBody] CreateStaffMembersInfo staffMembersInfo)
         {
-            await _context.Employees.FirstOrDefaultAsync(x => x.Id == staffMembersInfo.EmployeeId);
+            StaffMembersInfo newInfo = new StaffMembersInfo
+            {
+                FullName = staffMembersInfo.FullName,
+                Address = staffMembersInfo.Address,
+                PhoneNumber = staffMembersInfo.PhoneNumber,
+                Email = staffMembersInfo.Email,
+                Gender=(GenderEnum)staffMembersInfo.Gender,
+                Age=staffMembersInfo.Age,
+                EmergencyContact=staffMembersInfo.EmergencyContact,
+                TypeOfEmployment=(TypeOfEmploymentEnum)staffMembersInfo.TypeOfEmployment,
+
+
+
+            };
+          Employee? employee=  await _context.Employees.FirstOrDefaultAsync(x => x.Id == staffMembersInfo.EmployeeId);
+            if (employee == null)
+            {
+                return NotFound();
+            }
+            employee.StaffMembersInfo = newInfo;
             await _context.SaveChangesAsync();
             return Ok(staffMembersInfo);
         }
         [HttpPut]
-        public async Task<IActionResult> EditStaffMembersInfo([FromBody] CreateStaffMembersInfo staffMembersInfo)
+        public async Task<IActionResult> EditStaffMembersInfo([FromBody] EditStaffMembersInfo staffMembersInfo)
         {
             var staffMembersInfoToUpdate = await _context.StaffMembersInfos.Where(x => x.EmployeeId == staffMembersInfo.EmployeeId).FirstOrDefaultAsync();
             if (staffMembersInfoToUpdate == null)
@@ -88,7 +107,22 @@ namespace SweetTooth.Controllers
         }
     }
 }
+
 public class CreateStaffMembersInfo
+{
+
+    public int EmployeeId { get; set; }
+    public string FullName { get; set; } = string.Empty;
+    public string Address { get; set; } = string.Empty;
+    public string PhoneNumber { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
+    public int Gender { get; set; }
+    public int Age { get; set; }
+    public string EmergencyContact { get; set; } = string.Empty;
+    public int TypeOfEmployment { get; set; }
+    public List<string> Allergies { get; set; } = new List<string>();
+}
+public class EditStaffMembersInfo
 {
     public int EmployeeId { get; set; }
     public string FullName { get; set; } = string.Empty;

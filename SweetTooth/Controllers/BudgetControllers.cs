@@ -45,14 +45,24 @@ namespace SweetTooth.Controllers
             return Ok(budget);
         }
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Budget budget)
+        public async Task<IActionResult> CreateBudget([FromBody] CreateBudget budget)
         {
-            await _context.Budgets.AddAsync(budget);
+            Budget newBudget = new Budget
+            {
+                TotalSum = budget.TotalSum,
+                ExpensesBudget = budget.ExpensesBudget,
+                CharityBudget = budget.CharityBudget,
+                WasteBudget = budget.WasteBudget,
+                DateFrom = budget.DateFrom,
+                DateTo = budget.DateTo,
+                GoalEarnings = budget.GoalEarnings
+            };
+            await _context.Budgets.AddAsync(newBudget);
             await _context.SaveChangesAsync();
             return Ok(budget);
         }
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody] Budget budget)
+        public async Task<IActionResult> EditBudget([FromBody] EditBudget budget)
         {
             var budgetToUpdate = await _context.Budgets.FirstOrDefaultAsync(x => x.Id == budget.Id);
             if (budgetToUpdate == null)
@@ -83,5 +93,27 @@ namespace SweetTooth.Controllers
         }
     }
 
+}
+public class CreateBudget
+{
+    public int TotalSum { get; set; }
+    public int ExpensesBudget { get; set; }
+    public int CharityBudget { get; set; }
+    public int WasteBudget { get; set; }
+    public DateTime DateFrom { get; set; }
+    public DateTime DateTo { get; set; }
+    public int GoalEarnings { get; set; }
+}
+public class EditBudget 
+{
+  public int Id { get; set;} 
+public int TotalSum { get; set; }
+public int ExpensesBudget { get; set; }
+public int CharityBudget { get; set; }
+public int WasteBudget { get; set; }
+public DateTime DateFrom { get; set; }
+public DateTime DateTo { get; set; }
+public int GoalEarnings { get; set; }
+    
 }
    

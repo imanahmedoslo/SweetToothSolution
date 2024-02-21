@@ -54,7 +54,7 @@ namespace SweetTooth.Controllers
             return Ok(dailyClosingChart);
         }
         [HttpPut]
-        public async Task<IActionResult> EditClosingChart([FromBody] DailyClosingChart dailyClosingChart)
+        public async Task<IActionResult> EditClosingChart([FromBody] EditClosingChart dailyClosingChart)
         {
             DailyClosingChart? closingChartToUpdate = await _context.DailyClosingCharts.Where(x => x.Id == dailyClosingChart.Id).FirstOrDefaultAsync();
             if (closingChartToUpdate == null)
@@ -99,4 +99,18 @@ public class CreateClosingChart
     public int TotallBills { get; set; }
     public int EmployeeId { get; set; }
     public int BudgetId { get; set; }
+}
+
+public class EditClosingChart
+{
+   public int Id { get; set; }
+    public int TotalEarnings { get; set; }
+    public int TotalWaste { get; set; }
+    public int TotalCharity { get; set; }
+    public string ClosingReport { get; set; } = string.Empty;
+    public DateTime Date { get; set; }
+    public int TotallBills { get; set; }
+    public int EmployeeId { get; set; }
+    public int BudgetId { get; set; }
+
 }

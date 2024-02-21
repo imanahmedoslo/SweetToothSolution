@@ -45,14 +45,22 @@ namespace SweetTooth.Controllers
             return Ok(employee);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateEmployee([FromBody] Employee employee)
+        public async Task<IActionResult> CreateEmployee([FromBody] CreateEmployee employee)
         {
-            await _context.Employees.AddAsync(employee);
+            Employee newEmployee = new Employee
+            {
+                UserName = employee.UserName,
+                EmployeeNumber = employee.EmployeeNumber,
+                Password = employee.Password,
+                Role = employee.Role,
+                MonthlyWage = employee.MonthlyWage
+            };
+            await _context.Employees.AddAsync(newEmployee);
             await _context.SaveChangesAsync();
             return Ok(employee);
         }
         [HttpPut]
-        public async Task<IActionResult> EditEmployee([FromBody] Employee employee)
+        public async Task<IActionResult> EditEmployee([FromBody] EditEmployee employee)
         {
             var employeeToUpdate = await _context.Employees.Where(x => x.Id == employee.Id).FirstOrDefaultAsync();
             if (employeeToUpdate == null)
@@ -83,3 +91,21 @@ namespace SweetTooth.Controllers
 
     }
 }
+public class CreateEmployee
+{
+    public int EmployeeNumber { get; set; }
+    public string UserName { get; set; } = string.Empty;
+    public string Password { get; set; }=string.Empty;
+    public string Role { get; set; }= string.Empty;
+    public int MonthlyWage { get; set; }
+}
+public class EditEmployee
+{
+    public int Id { get; set; }
+    public int EmployeeNumber { get; set; }
+    public string UserName { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
+    public string Role { get; set; } = string.Empty;
+    public int MonthlyWage { get; set; }
+}
+

@@ -53,7 +53,7 @@ namespace SweetTooth.Controllers
             return Ok(shoppingList);
         }
         [HttpPut]
-        public async Task<IActionResult> EditShoppingList([FromBody] ShoppingListItem shoppingList)
+        public async Task<IActionResult> EditShoppingList([FromBody] EditItem shoppingList)
         {
             ShoppingListItem? shoppingListToUpdate = await _context.ShoppingListItems.Where(x => x.Id == shoppingList.Id).FirstOrDefaultAsync();
             if (shoppingListToUpdate == null)
@@ -64,7 +64,7 @@ namespace SweetTooth.Controllers
             shoppingListToUpdate.Amount = shoppingList.Amount;
             shoppingListToUpdate.TotalItemPrice = shoppingList.TotalItemPrice;
             shoppingListToUpdate.IsPurchased = shoppingList.IsPurchased;
-            shoppingListToUpdate.Measurement = shoppingList.Measurement;
+            shoppingListToUpdate.Measurement = (MeasurmentEnum)shoppingList.Measurement;
             shoppingListToUpdate.PurchaseChartId = shoppingList.PurchaseChartId;
             shoppingListToUpdate.ExpiringDate = shoppingList.ExpiringDate;
             await _context.SaveChangesAsync();
@@ -96,3 +96,15 @@ public class CreateItem
     public int PurchaseChartId { get; set; }
     public DateTime ExpiringDate { get; set; }
 }
+public class EditItem 
+{    
+    public int Id { get; set; }
+    public string ProductName { get; set; } = string.Empty;
+    public int Amount { get; set; }
+    public int TotalItemPrice { get; set; }
+    public bool IsPurchased { get; set; }
+    public int Measurement { get; set; }
+    public int PurchaseChartId { get; set; }
+    public DateTime ExpiringDate { get; set; }
+}
+

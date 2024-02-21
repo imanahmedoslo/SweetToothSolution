@@ -51,7 +51,7 @@ namespace SweetTooth.Controllers
             return Ok(purchaseChart);
         }
         [HttpPut]
-        public async Task<IActionResult> EditPurchaseChart([FromBody] PurchaseChart purchaseChart)
+        public async Task<IActionResult> EditPurchaseChart([FromBody] EditPurchaseChart purchaseChart)
         {
             PurchaseChart? purchaseChartToUpdate = await _context.PurchaseCharts.Where(x => x.Id == purchaseChart.Id).FirstOrDefaultAsync();
             if (purchaseChartToUpdate == null)
@@ -89,3 +89,12 @@ public class CreatePurchaseChart
     public int BudgetId { get; set; }
 
 }
+public class EditPurchaseChart {
+    public int Id { get; set; }
+    public int TotalPurchasePrice { get; set; }
+    public string Report { get; set; } = string.Empty;
+    public DateTime Date { get; set; }
+    public int EmployeeId { get; set; }
+    public int BudgetId { get; set; }
+}
+

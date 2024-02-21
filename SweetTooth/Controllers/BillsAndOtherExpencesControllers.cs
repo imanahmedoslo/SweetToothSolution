@@ -51,7 +51,7 @@ namespace SweetTooth.Controllers
             return Ok(billsAndOtherExpences);
         }
         [HttpPut]
-        public async Task<IActionResult> EditExpence([FromBody] BillsAndOtherExpences billsAndOtherExpences)
+        public async Task<IActionResult> EditExpence([FromBody] EditExpence billsAndOtherExpences)
         {
             BillsAndOtherExpences? ExpenceToUpdate = await _context.BillsAndOtherExpences.Where(x => x.Id == billsAndOtherExpences.Id).FirstOrDefaultAsync();
             if (ExpenceToUpdate == null)
@@ -82,6 +82,15 @@ namespace SweetTooth.Controllers
 }
 public class CreateExpence 
 {
+    public string ExpenceTitle { get; set; } = string.Empty;
+    public int ExpencetType { get; set; }
+    public int Price { get; set; }
+    public int ClosingChart { get; set; }
+
+}
+public class EditExpence
+{
+    public int Id { get; set; }
     public string ExpenceTitle { get; set; } = string.Empty;
     public int ExpencetType { get; set; }
     public int Price { get; set; }

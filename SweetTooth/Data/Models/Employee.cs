@@ -23,5 +23,9 @@
             MonthlyWage = monthlyWage;
 
         }
+        public Employee()
+        {
+
+        }
     }
 }

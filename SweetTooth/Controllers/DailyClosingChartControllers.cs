@@ -27,7 +27,7 @@ namespace SweetTooth.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetClosingChartById(int id)
         {
-            DailyClosingChart dailyClosingChart = await _context.DailyClosingCharts.FirstOrDefaultAsync(x => x.Id == id);
+            DailyClosingChart? dailyClosingChart = await _context.DailyClosingCharts.FirstOrDefaultAsync(x => x.Id == id);
             if (dailyClosingChart == null)
             {
                 return NotFound();

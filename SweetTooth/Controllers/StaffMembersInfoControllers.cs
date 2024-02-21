@@ -53,9 +53,9 @@ namespace SweetTooth.Controllers
             return Ok(staffMembersInfo);
         }
         [HttpPut]
-        public async Task<IActionResult> EditStaffMembersInfo([FromBody] StaffMembersInfo staffMembersInfo)
+        public async Task<IActionResult> EditStaffMembersInfo([FromBody] CreateStaffMembersInfo staffMembersInfo)
         {
-            var staffMembersInfoToUpdate = await _context.StaffMembersInfos.Where(x => x.Id == staffMembersInfo.Id).FirstOrDefaultAsync();
+            var staffMembersInfoToUpdate = await _context.StaffMembersInfos.Where(x => x.EmployeeId == staffMembersInfo.EmployeeId).FirstOrDefaultAsync();
             if (staffMembersInfoToUpdate == null)
             {
                 return NotFound();
@@ -69,9 +69,22 @@ namespace SweetTooth.Controllers
             staffMembersInfoToUpdate.Allergies = staffMembersInfo.Allergies;
             staffMembersInfoToUpdate.EmergencyContact = staffMembersInfo.EmergencyContact;
             staffMembersInfoToUpdate.Age = staffMembersInfo.Age;
+            staffMembersInfoToUpdate.TypeOfEmployment = (TypeOfEmploymentEnum)staffMembersInfo.TypeOfEmployment;
             await _context.SaveChangesAsync();
             return Ok(staffMembersInfoToUpdate);
 
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteStaffMembersInfo(int id)
+        {
+            var staffMembersInfo = await _context.StaffMembersInfos.FirstOrDefaultAsync(x => x.Id == id);
+            if (staffMembersInfo == null)
+            {
+                return NotFound();
+            }
+            _context.StaffMembersInfos.Remove(staffMembersInfo);
+            await _context.SaveChangesAsync();
+            return Ok();
         }
     }
 }
@@ -85,7 +98,7 @@ public class CreateStaffMembersInfo
     public int Gender { get; set; }
     public int Age { get; set; }
     public string EmergencyContact { get; set; } = string.Empty;
-    public TypeOfEmploymentEnum TypeOfEmployment { get; set; }
+    public int TypeOfEmployment { get; set; }
     public List<string> Allergies { get; set; } = new List<string>();
 
 

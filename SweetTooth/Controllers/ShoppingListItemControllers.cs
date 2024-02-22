@@ -11,6 +11,7 @@ namespace SweetTooth.Controllers
     public class ShoppingListItemControllers:ControllerBase
     {
         private readonly SweetToothDbContext _context;
+       
         public ShoppingListItemControllers(SweetToothDbContext context)
         {
             _context = context;
@@ -25,6 +26,8 @@ namespace SweetTooth.Controllers
             }
             return Ok(shoppingList);
         }
+
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetShoppingListById(int id)
         {

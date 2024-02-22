@@ -5,9 +5,7 @@ VisualStudioVersion = 17.8.34408.163
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SweetTooth", "SweetTooth\SweetTooth.csproj", "{47E0C5C0-EC0F-45C2-B438-D1F9FE8572E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SweetToothTests", "SweetToothTests\SweetToothTests.csproj", "{A242196E-923D-4549-8E7A-AF3279794CF7}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductGeneratorLib", "ProductGeneratorLib\ProductGeneratorLib.csproj", "{95882870-784B-4972-9EAC-3979860930E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SweetToothTests", "SweetToothTests\SweetToothTests.csproj", "{A242196E-923D-4549-8E7A-AF3279794CF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{A242196E-923D-4549-8E7A-AF3279794CF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A242196E-923D-4549-8E7A-AF3279794CF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A242196E-923D-4549-8E7A-AF3279794CF7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{95882870-784B-4972-9EAC-3979860930E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{95882870-784B-4972-9EAC-3979860930E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{95882870-784B-4972-9EAC-3979860930E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{95882870-784B-4972-9EAC-3979860930E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

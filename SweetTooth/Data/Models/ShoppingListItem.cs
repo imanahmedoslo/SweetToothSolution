@@ -1,5 +1,6 @@
 ﻿using SweetTooth.Data.Models.Enums;
 
+
 namespace SweetTooth.Data.Models
 {
     public class ShoppingListItem

@@ -18,5 +18,38 @@ namespace SweetTooth.Data.Models
 
 
         public virtual Employee? Employee { get; set; }
+   
+        public bool Equals(StaffMembersInfo staffMembersInfo)
+        {
+            return FullName == staffMembersInfo.FullName &&
+                 Address == staffMembersInfo.Address && 
+                PhoneNumber == staffMembersInfo.PhoneNumber
+                && Email == staffMembersInfo.Email&&
+                Gender == staffMembersInfo.Gender&& 
+                Age == staffMembersInfo.Age&& 
+                EmergencyContact == staffMembersInfo.EmergencyContact
+                && TypeOfEmployment == staffMembersInfo.TypeOfEmployment
+                && Allergies.SequenceEqual(staffMembersInfo.Allergies);
+
+        }
+        public override bool Equals(object? obj)
+        {
+            if (obj != null)
+            {
+                return Equals(obj as StaffMembersInfo);
+
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(FullName, Address, PhoneNumber, Email);
+        }
+    
     }
+
 }

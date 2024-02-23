@@ -59,7 +59,7 @@ namespace SweetTooth.Controllers
             };
             await _context.Budgets.AddAsync(newBudget);
             await _context.SaveChangesAsync();
-            return Ok(budget);
+            return Ok(newBudget);
         }
         [HttpPut]
         public async Task<IActionResult> EditBudget([FromBody] EditBudget budget)

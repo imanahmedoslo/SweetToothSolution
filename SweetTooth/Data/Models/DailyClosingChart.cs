@@ -17,6 +17,27 @@
         public Employee? Employee { get; set; }
         public ICollection<BillsAndOtherExpences>? BillsAndOtherExpences { get; set; }
 
+        public bool Equals(DailyClosingChart dailyClosingChart)
+        {
+            return TotalEarnings == dailyClosingChart.TotalEarnings && TotalWaste == dailyClosingChart.TotalWaste && TotalCharity == dailyClosingChart.TotalCharity && ClosingReport == dailyClosingChart.ClosingReport && Date == dailyClosingChart.Date && TotallBills == dailyClosingChart.TotallBills && EmployeeId == dailyClosingChart.EmployeeId && BudgetId == dailyClosingChart.BudgetId;
+        }
+        public override bool Equals(object? obj)
+        {
+            if (obj != null)
+            {
+                return Equals(obj as DailyClosingChart);
+
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(TotalEarnings, TotalWaste, TotalCharity, ClosingReport, Date, TotallBills, EmployeeId, BudgetId);
+        }
 
 
     }

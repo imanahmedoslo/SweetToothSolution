@@ -11,6 +11,27 @@ namespace SweetTooth.Data.Models
         public DateTime ExpiringDate { get; set; }
 
 
+        public bool Equals(Inventory inventory)
+        {
+            return ProductName == inventory.ProductName && Amount == inventory.Amount && Measurement == inventory.Measurement && ExpiringDate == inventory.ExpiringDate;
+        }
+        public override bool Equals(object? obj)
+        {
+            if (obj != null)
+            {
+                return Equals(obj as Inventory);
+
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(ProductName, Amount, Measurement, ExpiringDate);
+        }
 
     }
 }

@@ -48,7 +48,7 @@ namespace SweetTooth.Controllers
             };
             await _context.PurchaseCharts.AddAsync(newPurchaseChart);
             await _context.SaveChangesAsync();
-            return Ok(purchaseChart);
+            return Ok(newPurchaseChart);
         }
         [HttpPut]
         public async Task<IActionResult> EditPurchaseChart([FromBody] EditPurchaseChart purchaseChart)
@@ -64,7 +64,7 @@ namespace SweetTooth.Controllers
             purchaseChartToUpdate.EmployeeId = purchaseChart.EmployeeId;
             purchaseChartToUpdate.BudgetId = purchaseChart.BudgetId;
             await _context.SaveChangesAsync();
-            return Ok(purchaseChart);
+            return Ok(purchaseChartToUpdate);
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePurchaseChart(int id)

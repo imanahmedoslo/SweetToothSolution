@@ -27,5 +27,27 @@
         {
 
         }
+        public bool Equals(Employee employee)
+        {
+            return UserName == employee.UserName && EmployeeNumber == employee.EmployeeNumber && Password == employee.Password && Role == employee.Role && MonthlyWage == employee.MonthlyWage;
+        }
+        public override bool Equals(object? obj)
+        {
+            if (obj != null)
+            {
+                return Equals(obj as Employee);
+
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(UserName, EmployeeNumber, Password, Role, MonthlyWage);
+        }
+
     }
 }

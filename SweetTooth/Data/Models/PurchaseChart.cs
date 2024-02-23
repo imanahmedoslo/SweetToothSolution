@@ -15,5 +15,26 @@
         public Budget? Budget { get; set; }
         public ICollection<ShoppingListItem> ShoppingList { get; set; } = new List<ShoppingListItem>();
 
+        public bool Equals(PurchaseChart purchaseChart)
+        {
+            return TotalPurchasePrice == purchaseChart.TotalPurchasePrice && Report == purchaseChart.Report && Date == purchaseChart.Date && EmployeeId == purchaseChart.EmployeeId && BudgetId == purchaseChart.BudgetId;
+        }
+        public override bool Equals(object? obj)
+        {
+            if (obj != null)
+            {
+                return Equals(obj as PurchaseChart);
+
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(TotalPurchasePrice, Report, Date, EmployeeId, BudgetId);
+        }
     }
 }

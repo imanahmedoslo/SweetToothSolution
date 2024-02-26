@@ -174,11 +174,26 @@ namespace SweetToothTests
             var databaseName = "CreateEmployee_checkIfResultsCorrect";
 
             var database = factory.CreateDbContext(databaseName);
-            var context = new EmployeeControllers(database);
             var controller = new DailyClosingChartControllers(database);
-            var dailyClosingChart = new EditClosingChart
+
+            // Create a chart to edit
+            var originalChart = new DailyClosingChart
             {
-                Id = 1,
+                Date = DateTime.Now.AddDays(-1), // Use different date for original
+                TotalCharity = 50, // Use different value for original
+                TotalEarnings = 500, // Use different value for original
+                TotalWaste = 50, // Use different value for original
+                ClosingReport = "Initial",
+                TotallBills = 50,
+                EmployeeId = employeeId,
+                BudgetId = budgetId
+            };
+            await database.DailyClosingCharts.AddAsync(originalChart);
+            await database.SaveChangesAsync();
+
+            var editChart = new EditClosingChart
+            {
+                Id = originalChart.Id, // Use the Id of the chart we just added
                 Date = DateTime.Now,
                 TotalCharity = 100,
                 TotalEarnings = 1000,
@@ -187,8 +202,52 @@ namespace SweetToothTests
                 TotallBills = 100,
                 EmployeeId = employeeId,
                 BudgetId = budgetId
-                };
-            }
+            };
+
+            // Act
+            var result = await controller.EditClosingChart(editChart);
+
+            // Assert
+            var viewResult = Assert.IsType<OkObjectResult>(result);
+            var model = Assert.IsAssignableFrom<EditClosingChart>(viewResult.Value);
+            Assert.NotNull(model);
+            // You might also want to assert that the properties were indeed updated.
         }
+        [Fact]
+        public async Task DeleteClosingChart_ReturnsOkResult()
+        {
+            // Arrange
+            var databaseName = "CreateEmployee_checkIfResultsCorrect";
+            var database = factory.CreateDbContext(databaseName);
+            var controller = new DailyClosingChartControllers(database);
+
+            // Create a chart to delete
+            var chartToDelete = new DailyClosingChart
+            {
+                Date = DateTime.Now,
+                TotalCharity = 100,
+                TotalEarnings = 1000,
+                TotalWaste = 100,
+                ClosingReport = "ToBeDeleted",
+                TotallBills = 100,
+                EmployeeId = await getEmployeeId(),
+                BudgetId = await GetBudgetId()
+            };
+            await database.DailyClosingCharts.AddAsync(chartToDelete);
+            await database.SaveChangesAsync();
+
+            // Act
+            var result = await controller.DeleteClosingChart(chartToDelete.Id);
+
+            // Assert
+            var viewResult = Assert.IsType<OkResult>(result);
+            var deletedChart = await database.DailyClosingCharts.FirstOrDefaultAsync(x => x.Id == chartToDelete.Id);
+            Assert.Null(deletedChart); // Verify that the chart is indeed deleted
+        }
+
+
+
+
     }
+}
 
